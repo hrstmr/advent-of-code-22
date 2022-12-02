@@ -1,0 +1,10 @@
+vendor
+lang
+package.json
+dhtmlxscheduler.css
+*.yml
+*.md
+*.min.css
+*.min.js
+*.metadata.js
+input.ts

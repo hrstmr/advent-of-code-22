@@ -1,17 +1,17 @@
-import { input } from "./1a-input.ts";
+import { input } from './1a-input.ts';
 // const input = await Deno.readTextFile("./1a-input.txt");
-const elves = input.split("\n\n");
+const elves = input.split('\n\n');
 console.log(elves);
 // const elves = input.split("\n\n");
 const sums = elves.map((calStr) => {
-  let calList = calStr.split("\n");
-  const calListNum = calList.map((x) => +x);
-  console.log(calListNum);
-  const sum = calListNum.reduce((accumulator, current) => {
-    return accumulator + current;
-  }, 0);
-  console.log(sum);
-  return sum;
+    let calList = calStr.split('\n');
+    const calListNum = calList.map((x) => +x);
+    console.log(calListNum);
+    const sum = calListNum.reduce((accumulator, current) => {
+        return accumulator + current;
+    }, 0);
+    console.log(sum);
+    return sum;
 });
 
 console.log(sums);

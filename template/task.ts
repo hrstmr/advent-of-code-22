@@ -1,2 +1,2 @@
-import { input } from "./input.ts";
+import { input } from './input.ts';
 console.log(input);
