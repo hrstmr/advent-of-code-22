@@ -1,18 +1,19 @@
-import { input } from './input.ts';
-// const input = `vJrwpWtwJgWrhcsFMMfFFhFp
-// jqHRNqRjqzjGDLGLrsFMfFZSrLrFZsSL
-// PmmdzqPrVvPwwTWBwg
-// wMqvLMZHhHMvwLHjbvcjnnSBnvTQFn
-// ttgJtRGJQctTZtZT
-// CrZsJsPPZsGzwwsLwLmpwMDw` as const;
+// import { input } from './input.ts';
+const input = `vJrwpWtwJgWrhcsFMMfFFhFp
+jqHRNqRjqzjGDLGLrsFMfFZSrLrFZsSL
+PmmdzqPrVvPwwTWBwg
+wMqvLMZHhHMvwLHjbvcjnnSBnvTQFn
+ttgJtRGJQctTZtZT
+CrZsJsPPZsGzwwsLwLmpwMDw` as const;
 
 const rugSacks = input.split('\n');
 
 const groupedRugSacks: string[][][] = [];
 let currentGroup: string[][] = [];
 rugSacks.forEach((r, i) => {
+    currentGroup.push([...r]);
     if (i === rugSacks.length - 1) {
-        currentGroup.push([...r]);
+        // currentGroup.push([...r]);
         groupedRugSacks.push(currentGroup);
         return;
     }
@@ -90,10 +91,10 @@ let count = 0;
 
 groupedRugSacks.forEach((gr) => {
     // find the common items using filter()
-    console.log(gr);
-    let common = gr[0].filter((x) => gr[1].includes(x) && gr[2].includes(x));
+    // console.log(gr);
+    const common = gr[0].filter((x) => gr[1].includes(x) && gr[2].includes(x));
 
-    console.log(common);
+    // console.log(common);
 
     count += LetterPriority.indexOf(common[0] ?? '');
 });
