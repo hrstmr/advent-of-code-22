@@ -1,0 +1,12 @@
+{
+    // For more information, visit: https://go.microsoft.com/fwlink/?LinkId=733558
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "deno run",
+            "type": "shell",
+            "command": "deno run --allow-read --watch ${relativeFile}",
+            "detail": "Deno Run on Current File"
+        }
+    ]
+}
