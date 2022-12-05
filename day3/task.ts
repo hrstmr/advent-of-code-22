@@ -1,10 +1,10 @@
-import { input } from './input.ts';
-// const input = `vJrwpWtwJgWrhcsFMMfFFhFp
-// jqHRNqRjqzjGDLGLrsFMfFZSrLrFZsSL
-// PmmdzqPrVvPwwTWBwg
-// wMqvLMZHhHMvwLHjbvcjnnSBnvTQFn
-// ttgJtRGJQctTZtZT
-// CrZsJsPPZsGzwwsLwLmpwMDw` as const;
+// import { input } from './input.ts';
+const input = `vJrwpWtwJgWrhcsFMMfFFhFp
+jqHRNqRjqzjGDLGLrsFMfFZSrLrFZsSL
+PmmdzqPrVvPwwTWBwg
+wMqvLMZHhHMvwLHjbvcjnnSBnvTQFn
+ttgJtRGJQctTZtZT
+CrZsJsPPZsGzwwsLwLmpwMDw` as const;
 
 const rugSacks = input.split('\n');
 
@@ -73,14 +73,20 @@ rugSacks.forEach(([...items]) => {
         if (!blackList.has(f)) {
             // console.log(last.find((l) => l === f));
 
+            // console.log(last.find((l) => l === f));
+            // console.log(last.find((l) => l === f)?.charCodeAt(0));
+
             count += LetterPriority.indexOf(last.find((l) => l === f) ?? '');
             blackList.add(f);
         }
     });
-    console.log({
-        first,
-        last,
-    });
+    // console.log({
+    //     first,
+    //     last,
+    // });
 });
 
 console.log(count);
+LetterPriority.forEach((letter, index) => {
+    console.log({ letter, index, ascii: letter.charCodeAt(0) });
+});
