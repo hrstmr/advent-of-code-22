@@ -1,31 +1,43 @@
 import { input } from './input.ts';
 
-// const input = `2-4,6-8
-// 2-3,4-5
-// 5-7,7-9
-// 2-8,3-7
-// 6-6,4-6
-// 2-6,4-8` as const;
-
 const pairs = input
     .split('\n')
-    .map((pair) => pair.split(',').flatMap((range) => range.split('-').map((digit) => +digit)));
+    .map((pair) =>
+        pair
+            .split(',')
+            .flatMap((range) =>
+                range.split('-').map((digit) => +digit)
+            )
+    );
 
 let count = 0;
 pairs.forEach((pr) => {
+    // Destructure the array of 4
+    // numbers into 4 separate variables
     const [_1S, _1E, _2S, _2E] = pr;
 
-    const _1S_touches__2 = _2S <= _1S && _1S <= _2E;
-    const _1E_touches__2 = _2S <= _1E && _1E <= _2E;
+    // Check if the start of the first
+    // range is inside the second range
+    const s1_2 = _2S <= _1S && _1S <= _2E;
 
-    const _2S_touches__1 = _1S <= _2S && _2S <= _1E;
-    const _2E_touches__1 = _1S <= _2E && _2E <= _1E;
-    console.log(_1S_touches__2 || _1E_touches__2 || _2S_touches__1 || _2E_touches__1);
+    // Check if the end of the first
+    // range is inside the second range
+    const e1_2 = _2S <= _1E && _1E <= _2E;
 
-    if (_1S_touches__2 || _1E_touches__2 || _2S_touches__1 || _2E_touches__1) {
+    // Check if the start of the second
+    // range is inside the first range
+    const s2_1 = _1S <= _2S && _2S <= _1E;
+
+    // Check if the end of the second
+    // range is inside the first range
+    const e2_1 = _1S <= _2E && _2E <= _1E;
+
+    // If any of the above conditions
+    // are true, increment the counter
+    if (s1_2 || e1_2 || s2_1 || e2_1) {
         count++;
-        console.log({ _1S, _1E, _2S, _2E });
-        console.log({ _1S_touches__2, _1E_touches__2, _2S_touches__1, _2E_touches__1 });
     }
 });
+
+// Print the final count
 console.log(count);

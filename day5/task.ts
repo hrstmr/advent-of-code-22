@@ -1,62 +1,60 @@
 import { input } from './input.ts';
-// const input = `    [D]
-// [N] [C]
-// [Z] [M] [P]
-//  1   2   3
 
-// move 1 from 2 to 1
-// move 3 from 1 to 3
-// move 2 from 2 to 1
-// move 1 from 1 to 2` as const;
-
-// console.log(input);
-
+// Find the index of the string 'move' in the input
 const indexOfMove = input.indexOf('move');
-console.log(indexOfMove);
 
+// Split the input into two parts: crates and move data
 const crates = input.slice(0, indexOfMove);
 const moveData = input.slice(indexOfMove);
-console.log({ crates, moveData });
 
+// Split the crates part into rows, removing empty rows
 const cratesRows = crates.split('\n').filter((x) => x);
-console.log(cratesRows);
 
+// Get the numbers of the crates from the last
+// row of the crates part of the input
 const cratesNum = cratesRows
+    // Get the last row and remove any whitespace
     .pop()
     ?.replaceAll(' ', '')
+    // Convert each character to a number
     .split('')
     .map((x) => +x)!;
-console.log(cratesNum);
 
+// Get the letters of the crates from the first three
+// rows of the crates part of the input
 const crateLetters = cratesRows.map((r) =>
+    // Remove any whitespace and brackets
     r
         .replaceAll('  ', ' ')
         .replaceAll('[', '')
         .replaceAll(']', '')
+        // Get only the even-indexed characters (which are the letters)
         .split('')
-        .filter((x, i) => i % 2 === 0)
+        .filter((_x, i) => i % 2 === 0)
 );
 
-console.log({ crateLetters });
+// Create an object that maps crate numbers to arrays of letters
+const crateList: Record<number, string[]> = {};
 
-// console.log(crateLetters);
-
-let crateList: Record<number, string[]> = {};
+// Initialize the arrays of letters for each crate number
 cratesNum.forEach((num, i) => {
     crateList[num] = [];
     crateLetters.forEach((l) => {
+        // Get the letter for the ith column in the row of letters
         const letter = l.at(i)?.trim();
         if (letter) {
+            // Add the letter to the array for the corresponding crate
             crateList[num].unshift(letter);
         }
     });
 });
 
-console.log(crateList);
-
+// Parse the move data into an array of arrays of numbers
 const moves = moveData
+    // Split the move data into lines
     .split('\n')
-
+    // Split each line into space-separated words,
+    //convert to numbers, and remove any empty values
     .map((x) =>
         x
             .split(' ')
@@ -64,20 +62,23 @@ const moves = moveData
             .filter((x) => x)
     );
 
-console.log(moves);
-
+// Loop through each move
 moves.forEach(([num, from, to]) => {
+    // For each move, pop the specified number of crates
+    // from the "from" stack and push them to the "to" stack
     for (let i = 0; i < num; i++) {
         crateList[to].push(crateList[from].pop()!);
-        // console.log(crateList);
     }
 });
 
-console.log(crateList);
-
+// Create an empty string to store the top crate letters
 let topCrates = '';
+
+// Loop through each stack of crates
 cratesNum.forEach((n) => {
+    // Add the top crate letter from each stack to the string
     topCrates += crateList[n].at(-1);
 });
 
+// Print the final string of top crate letters
 console.log(topCrates);
