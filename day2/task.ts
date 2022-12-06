@@ -1,61 +1,46 @@
 import { input } from './input.ts';
 
-// export const input = `A Y
-// B X
-// C Z` as const;
-
-console.log(input);
-
-const roundStrings = input.split('\n');
-const rounds = roundStrings.map((r) => {
-    const tup = r.split(' ');
-    return {
-        op: tup[0] as keyof typeof opp,
-        my: tup[1] as keyof typeof me,
-    };
-});
-
+type opKey = keyof typeof opp;
+type meKey = keyof typeof me;
 const opp = {
-    A: 1, //Rock
-    B: 2, //Paper
-    C: 3, //Scissors
+    A: 1, //🪨
+    B: 2, //📄
+    C: 3, //✂️
 };
 const me = {
-    X: 1, //Rock
-    Y: 2, //Paper
-    Z: 3, //Scissors
+    X: 1, //🪨
+    Y: 2, //📄
+    Z: 3, //✂️
 };
-const winScore = (oKey: keyof typeof opp, mKey: keyof typeof me) => {
-    if (!opp[oKey]) throw new Error(oKey);
-    if (!me[mKey]) throw new Error(oKey);
 
+const winScore = (oKey: opKey, mKey: meKey) => {
     if (opp[oKey] === me[mKey]) return 3;
 
     if (opp[oKey] < me[mKey]) {
+        // 🪨 🆚 ✂️
         if (opp[oKey] === 1 && me[mKey] === 3) return 0;
         return 6;
     }
-
     if (opp[oKey] > me[mKey]) {
+        // 🪨 🆚 ✂️
         if (me[mKey] === 1 && opp[oKey] === 3) return 6;
         return 0;
     }
-
-    throw new Error(oKey + '|' + mKey);
+    throw new Error(oKey + ' | ' + mKey);
 };
-const roundScore = (oKey: keyof typeof opp, mKey: keyof typeof me) => {
+
+const roundScore = (oKey: opKey, mKey: meKey) => {
     const baseScore = me[mKey];
     const winPoints = winScore(oKey, mKey);
-    console.log({ baseScore, winPoints });
     return baseScore + winPoints;
 };
-console.log(rounds);
 
-const sum = rounds.reduce((accumulator, current) => {
-    //   console.log(accumulator);
-    const rs = roundScore(current.op, current.my);
-    console.log(rs);
+const rounds = input.split('\n').map((r) => {
+    return r.split(' ') as [opKey, meKey];
+});
 
-    return accumulator + rs;
+const sum = rounds.reduce((ttl, [op, my]) => {
+    const rs = roundScore(op, my);
+    return ttl + rs;
 }, 0);
 console.log(sum);

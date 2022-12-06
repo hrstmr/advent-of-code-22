@@ -1,92 +1,37 @@
-// import { input } from './input.ts';
-const input = `vJrwpWtwJgWrhcsFMMfFFhFp
-jqHRNqRjqzjGDLGLrsFMfFZSrLrFZsSL
-PmmdzqPrVvPwwTWBwg
-wMqvLMZHhHMvwLHjbvcjnnSBnvTQFn
-ttgJtRGJQctTZtZT
-CrZsJsPPZsGzwwsLwLmpwMDw` as const;
+import { input } from './input.ts';
 
+// Split the input into an array of strings,one string per rucksack
 const rugSacks = input.split('\n');
 
-const LetterPriority = [
-    '', //unshift
-    'a',
-    'b',
-    'c',
-    'd',
-    'e',
-    'f',
-    'g',
-    'h',
-    'i',
-    'j',
-    'k',
-    'l',
-    'm',
-    'n',
-    'o',
-    'p',
-    'q',
-    'r',
-    's',
-    't',
-    'u',
-    'v',
-    'w',
-    'x',
-    'y',
-    'z',
-    'A',
-    'B',
-    'C',
-    'D',
-    'E',
-    'F',
-    'G',
-    'H',
-    'I',
-    'J',
-    'K',
-    'L',
-    'M',
-    'N',
-    'O',
-    'P',
-    'Q',
-    'R',
-    'S',
-    'T',
-    'U',
-    'V',
-    'W',
-    'X',
-    'Y',
-    'Z',
-];
+// This string defines the order of
+// the letters, from lowest to highest priority
+const LetterPriority = ' abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
 
+// This variable will keep track of the total number of points
 let count = 0;
+
+// Loop through each rucksack
 rugSacks.forEach(([...items]) => {
-    let first = items.toSpliced(0, items.length / 2);
-    let last = items.toSpliced(items.length / 2, items.length);
+    // Split the items into two arrays, the first half and the second half
+    let first = items.slice(0, items.length / 2);
+    let last = items.slice(items.length / 2, items.length);
+
+    // Keep track of items that have already been counted
     let blackList = new Set<string>();
+
+    // Loop through each item in the first half of the rucksack
     first.forEach((f) => {
+        // If the item hasn't been counted yet...
         if (!blackList.has(f)) {
-            // console.log(last.find((l) => l === f));
-
-            // console.log(last.find((l) => l === f));
-            // console.log(last.find((l) => l === f)?.charCodeAt(0));
-
+            // Add the priority of the matching item in the
+            // second half of the rucksack to the total count
             count += LetterPriority.indexOf(last.find((l) => l === f) ?? '');
+
+            // Mark the item as counted
             blackList.add(f);
         }
     });
-    // console.log({
-    //     first,
-    //     last,
-    // });
 });
 
+// Print the final count
 console.log(count);
-LetterPriority.forEach((letter, index) => {
-    console.log({ letter, index, ascii: letter.charCodeAt(0) });
-});

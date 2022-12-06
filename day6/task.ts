@@ -2,17 +2,12 @@ import { input } from './input.ts';
 // const input = `mjqjpqmgbljsphdztnvjfqwrcgsmlb` as const;
 
 const inputList = input.split('');
-
+const buffer = 14;
 for (let i = 0; i < inputList.length; i++) {
-    const subset = inputList.slice(i, i + 14);
-    const isUnique = [...new Set(subset)].length === subset.length;
-    console.log(isUnique);
-    console.log(subset);
-
+    const subset = inputList.slice(i, i + buffer);
+    const isUnique = new Set(subset).size === buffer;
     if (isUnique) {
-        console.log(i + 14);
+        console.log(i + buffer);
         break;
     }
 }
-
-console.log(input);
